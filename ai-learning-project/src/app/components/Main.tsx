@@ -62,8 +62,8 @@ export const Main = (): JSX.Element => {
         <Typography gutterBottom>Temperature</Typography>
         <Slider
           value={temperature}
-          onChange={(e, newValue) => setTemperature(newValue)}
-          step={0.01}
+          onChange={(e, newValue) => setTemperature(newValue as number)}
+          step={0.1}
           min={0}
           max={1}
           valueLabelDisplay="auto"
