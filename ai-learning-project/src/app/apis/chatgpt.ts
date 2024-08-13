@@ -1,9 +1,10 @@
 import OpenAI from "openai";
 
 type ChatCompletionArgs = {
+    temperature: number;
     systemPrompt?: string;
     userPrompt?: string;
-    temperature: number;
+    base64Image?: string | ArrayBuffer | null,
 };
 
 class ChatService {
@@ -17,16 +18,34 @@ class ChatService {
     }
 
     public async getChatCompletion({
+        temperature,
         systemPrompt = "",
         userPrompt = "",
-        temperature,
+        base64Image,
     }: ChatCompletionArgs) {
-        const completion = await this.openai.chat.completions.create({
+        const completion = await this.openai.chat.completions.create(base64Image ? {
+            model: "gpt-4o-mini",
             messages: [
                 { role: "system", content: systemPrompt },
-                { role: "user", content: userPrompt }
+                {
+                    role: "user",
+                    content: [
+                        { type: "text", text: "Can you tell what you see on this image?" },
+                        {
+                            type: "image_url",
+                            image_url: {
+                                "url": base64Image.toString(),
+                            },
+                        },
+                    ],
+                },
             ],
+        } : {
             model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPrompt },
+            ],
             temperature: temperature,
         });
         return completion;
