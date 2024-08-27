@@ -1,6 +1,6 @@
 import { Box, Slider, Tooltip, Typography } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import * as React from "react";
+import React from "react";
 
 export interface ITopPControlProps {
   value: number;
@@ -9,9 +9,9 @@ export interface ITopPControlProps {
 
 export function TopPControl({ value, onChange }: ITopPControlProps) {
   const handleChange = (
-    e: Event,
+    _e: Event,
     value: number | number[],
-    activeThumb: number
+    _activeThumb: number
   ) => {
     onChange(value as number);
   };

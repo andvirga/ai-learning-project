@@ -1,6 +1,6 @@
 import { Box, Slider, Tooltip, Typography } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import * as React from "react";
+import React from "react";
 
 export interface ITemperatureControlProps {
   value: number;
