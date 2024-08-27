@@ -7,6 +7,7 @@ import { UserPromptInput } from "./Inputs/UserPromptInput";
 import { TemperatureControl } from "./Inputs/TemperatureControl";
 import ImageUploadInput from "./Inputs/ImageUploadInput";
 import Image from "next/image";
+import { TopPControl } from "./Inputs/TopPControl";
 
 type ChatResponse = {
   loading: boolean;
@@ -26,7 +27,8 @@ export const ChatForm = ({ character }: Props): JSX.Element => {
     `Act as if you were ${character.name}`
   );
   const [userPrompt, setUserPrompt] = useState<string>(character.question);
-  const [temperature, setTemperature] = useState<number>(0.5);
+  const [temperature, setTemperature] = useState<number>(1);
+  const [topP, setTopP] = useState<number>(1);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [chatResponse, setChatResponse] = useState<ChatResponse>({
     loading: false,
@@ -42,6 +44,7 @@ export const ChatForm = ({ character }: Props): JSX.Element => {
       systemPrompt,
       userPrompt,
       temperature,
+      topP,
       base64Image: image,
     });
     setChatResponse({
@@ -55,19 +58,20 @@ export const ChatForm = ({ character }: Props): JSX.Element => {
       <Typography variant="h4" component="h1" gutterBottom>
         AI Learning Chat
       </Typography>
-      <Box component="form" noValidate autoComplete="off">
-        <SystemPromptInput
-          value={systemPrompt}
-          onChange={(value) => setSystemPrompt(value)}
-        />
-        <UserPromptInput
-          value={userPrompt}
-          onChange={(value) => setUserPrompt(value)}
-        />
-        <TemperatureControl
-          value={temperature}
-          onChange={(value) => setTemperature(value)}
-        />
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap={1}
+        component="form"
+        noValidate
+        autoComplete="off"
+      >
+        <SystemPromptInput value={systemPrompt} onChange={setSystemPrompt} />
+        <UserPromptInput value={userPrompt} onChange={setUserPrompt} />
+        <Box display="flex" flexDirection="row" gap={1}>
+          <TemperatureControl value={temperature} onChange={setTemperature} />
+          <TopPControl value={topP} onChange={setTopP} />
+        </Box>
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           {character.showImageControl && (
             <ImageUploadInput

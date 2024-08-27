@@ -2,15 +2,12 @@ import { Box, Slider, Tooltip, Typography } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import React from "react";
 
-export interface ITemperatureControlProps {
+export interface ITopPControlProps {
   value: number;
   onChange: (value: number) => void;
 }
 
-export function TemperatureControl({
-  value,
-  onChange,
-}: ITemperatureControlProps) {
+export function TopPControl({ value, onChange }: ITopPControlProps) {
   const handleChange = (
     _e: Event,
     value: number | number[],
@@ -21,17 +18,21 @@ export function TemperatureControl({
   return (
     <Box display="flex" flexDirection="column" width="100%">
       <Box display="flex" flexDirection="row" gap={1}>
-        <Typography gutterBottom>Temperature</Typography>
-        <Tooltip title="What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.">
+        <Typography gutterBottom>Top P</Typography>
+        <Tooltip
+          title="Top P is nucleus sampling, where the model considers the results of
+          the tokens with top_p probability mass. So 0.1 means only the tokens
+          comprising the top 10% probability mass are considered."
+        >
           <HelpOutlineIcon />
         </Tooltip>
       </Box>
       <Slider
         value={value}
         onChange={handleChange}
-        step={0.1}
+        step={0.01}
         min={0}
-        max={2}
+        max={1}
         valueLabelDisplay="auto"
       />
     </Box>

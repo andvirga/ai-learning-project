@@ -2,6 +2,7 @@ import OpenAI from "openai";
 
 type ChatCompletionArgs = {
     temperature: number;
+    topP: number;
     systemPrompt?: string;
     userPrompt?: string;
     base64Image?: string | ArrayBuffer | null,
@@ -19,6 +20,7 @@ class ChatService {
 
     public async getChatCompletion({
         temperature,
+        topP,
         systemPrompt = "",
         userPrompt = "",
         base64Image,
@@ -47,6 +49,7 @@ class ChatService {
                 { role: "user", content: userPrompt },
             ],
             temperature: temperature,
+            top_p: topP,
         });
         return completion;
     }
