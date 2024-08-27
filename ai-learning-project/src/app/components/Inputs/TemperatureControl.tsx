@@ -18,7 +18,7 @@ export function TemperatureControl({
         onChange={(e, newValue) => onChange(newValue as number)}
         step={0.1}
         min={0}
-        max={1}
+        max={2}
         valueLabelDisplay="auto"
       />
     </>
