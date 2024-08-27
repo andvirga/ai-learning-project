@@ -66,20 +66,11 @@ export const ChatForm = ({ character }: Props): JSX.Element => {
         noValidate
         autoComplete="off"
       >
-        <SystemPromptInput
-          value={systemPrompt}
-          onChange={(value) => setSystemPrompt(value)}
-        />
-        <UserPromptInput
-          value={userPrompt}
-          onChange={(value) => setUserPrompt(value)}
-        />
+        <SystemPromptInput value={systemPrompt} onChange={setSystemPrompt} />
+        <UserPromptInput value={userPrompt} onChange={setUserPrompt} />
         <Box display="flex" flexDirection="row" gap={1}>
-          <TemperatureControl
-            value={temperature}
-            onChange={(value) => setTemperature(value)}
-          />
-          <TopPControl value={topP} onChange={(value) => setTopP(value)} />
+          <TemperatureControl value={temperature} onChange={setTemperature} />
+          <TopPControl value={topP} onChange={setTopP} />
         </Box>
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           {character.showImageControl && (

@@ -8,6 +8,13 @@ export interface ITopPControlProps {
 }
 
 export function TopPControl({ value, onChange }: ITopPControlProps) {
+  const handleChange = (
+    e: Event,
+    value: number | number[],
+    activeThumb: number
+  ) => {
+    onChange(value as number);
+  };
   return (
     <Box display="flex" flexDirection="column" width="100%">
       <Box display="flex" flexDirection="row" gap={1}>
@@ -22,7 +29,7 @@ export function TopPControl({ value, onChange }: ITopPControlProps) {
       </Box>
       <Slider
         value={value}
-        onChange={(e, newValue) => onChange(newValue as number)}
+        onChange={handleChange}
         step={0.01}
         min={0}
         max={1}

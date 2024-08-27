@@ -11,6 +11,13 @@ export function TemperatureControl({
   value,
   onChange,
 }: ITemperatureControlProps) {
+  const handleChange = (
+    e: Event,
+    value: number | number[],
+    activeThumb: number
+  ) => {
+    onChange(value as number);
+  };
   return (
     <Box display="flex" flexDirection="column" width="100%">
       <Box display="flex" flexDirection="row" gap={1}>
@@ -21,7 +28,7 @@ export function TemperatureControl({
       </Box>
       <Slider
         value={value}
-        onChange={(e, newValue) => onChange(newValue as number)}
+        onChange={handleChange}
         step={0.1}
         min={0}
         max={2}
