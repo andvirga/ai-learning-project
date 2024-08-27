@@ -49,7 +49,7 @@ class ChatService {
                     { role: "system", content: systemPrompt },
                     { role: "user", content: userPrompt },
                 ],
-                temperature: temperature,
+                temperature,
                 top_p: topP,
             });
             return { message: completion.choices[0].message?.content || "", hasErrors: false };
