@@ -11,33 +11,37 @@ import { TopPControl } from "./Inputs/TopPControl";
 
 type ChatResponse = {
   loading: boolean;
+  hasErrors: boolean;
   message: string;
 };
 
 interface Props {
-  character: {
+  page: {
     name: string;
+    title: string;
     question: string;
     showImageControl: boolean;
   };
 }
 
-export const ChatForm = ({ character }: Props): JSX.Element => {
+export const ChatForm = ({ page }: Props): JSX.Element => {
   const [systemPrompt, setSystemPrompt] = useState<string>(
-    `Act as if you were ${character.name}`
+    `Act as if you were ${page.name}`
   );
-  const [userPrompt, setUserPrompt] = useState<string>(character.question);
+  const [userPrompt, setUserPrompt] = useState<string>(page.question);
   const [temperature, setTemperature] = useState<number>(1);
   const [topP, setTopP] = useState<number>(1);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [chatResponse, setChatResponse] = useState<ChatResponse>({
     loading: false,
+    hasErrors: false,
     message: "",
   });
 
   const handleChat = async () => {
     setChatResponse({
       loading: true,
+      hasErrors: false,
       message: "ChatGPT is processing your answer...",
     });
     const response = await chatService.getChatCompletion({
@@ -49,14 +53,15 @@ export const ChatForm = ({ character }: Props): JSX.Element => {
     });
     setChatResponse({
       loading: false,
-      message: response.choices[0].message?.content || "",
+      hasErrors: response.hasErrors,
+      message: response.message,
     });
   };
 
   return (
     <Box my={4}>
       <Typography variant="h4" component="h1" gutterBottom>
-        AI Learning Chat
+        {page.title}
       </Typography>
       <Box
         display="flex"
@@ -73,7 +78,7 @@ export const ChatForm = ({ character }: Props): JSX.Element => {
           <TopPControl value={topP} onChange={setTopP} />
         </Box>
         <Box display="flex" flexDirection="row" justifyContent="space-between">
-          {character.showImageControl && (
+          {page.showImageControl && (
             <ImageUploadInput
               onImageUpload={(base64String) => {
                 setImage(base64String);

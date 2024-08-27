@@ -4,5 +4,10 @@ An OpenAI API discovery and learning project
 
 ## Routes
 
-- http://localhost:3000/einstein
-- http://localhost:3000/davinci
+### Text Generation
+
+- http://localhost:3000/text-generation
+
+### Image Analysis
+
+- http://localhost:3000/image-analysis

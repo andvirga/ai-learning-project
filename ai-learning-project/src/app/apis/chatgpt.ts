@@ -25,33 +25,41 @@ class ChatService {
         userPrompt = "",
         base64Image,
     }: ChatCompletionArgs) {
-        const completion = await this.openai.chat.completions.create(base64Image ? {
-            model: "gpt-4o-mini",
-            messages: [
-                { role: "system", content: systemPrompt },
-                {
-                    role: "user",
-                    content: [
-                        { type: "text", text: "Can you tell what you see on this image?" },
-                        {
-                            type: "image_url",
-                            image_url: {
-                                "url": base64Image.toString(),
+        try {
+            const completion = await this.openai.chat.completions.create(base64Image ? {
+                model: "gpt-4o-mini",
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    {
+                        role: "user",
+                        content: [
+                            { type: "text", text: "Can you tell what you see on this image?" },
+                            {
+                                type: "image_url",
+                                image_url: {
+                                    "url": base64Image.toString(),
+                                },
                             },
-                        },
-                    ],
-                },
-            ],
-        } : {
-            model: "gpt-4o-mini",
-            messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: userPrompt },
-            ],
-            temperature: temperature,
-            top_p: topP,
-        });
-        return completion;
+                        ],
+                    },
+                ],
+            } : {
+                model: "gpt-4o-mini",
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: userPrompt },
+                ],
+                temperature: temperature,
+                top_p: topP,
+            });
+            return { message: completion.choices[0].message?.content || "", hasErrors: false };
+        }
+        catch (e) {
+            return {
+                hasErrors: true,
+                message: e as string,
+            }
+        }
     }
 }
 

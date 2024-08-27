@@ -1,6 +1,6 @@
-import { Box, Typography } from '@mui/material';
-import Image from 'next/image';
-import openaiLogo from '../../../public/openai.svg';
+import { Box, Typography } from "@mui/material";
+import Image from "next/image";
+import openaiLogo from "../../../public/openai-black.svg";
 
 export const Footer = (): JSX.Element => {
   return (
@@ -11,4 +11,4 @@ export const Footer = (): JSX.Element => {
       <Image src={openaiLogo} alt="OpenAI Logo" width={50} height={50} />
     </Box>
   );
-}
+};

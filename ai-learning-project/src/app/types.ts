@@ -1,17 +1,19 @@
-enum CharactersEnum {
-    Einstein = 'einstein',
-    DaVinci = 'davinci'
+enum PagesEnum {
+    TextGeneration = 'text-generation',
+    ImageAnalysis = 'image-analysis'
 }
 
-export const CHARACTERS = {
-    [CharactersEnum.DaVinci]: {
+export const PAGES = {
+    [PagesEnum.ImageAnalysis]: {
         name: 'Leonardo Da Vinci',
         question: 'Can you tell what you see on this image?',
         showImageControl: true,
+        title: 'Chat Completions: Image Analysis'
     },
-    [CharactersEnum.Einstein]: {
+    [PagesEnum.TextGeneration]: {
         name: 'Albert Einstein',
         question: 'Do you believe God is playing with dices?',
-        showImageControl: false
+        showImageControl: false,
+        title: 'Chat Completions: Text Generation'
     }
 }
