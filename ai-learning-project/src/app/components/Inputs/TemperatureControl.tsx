@@ -12,9 +12,9 @@ export function TemperatureControl({
   onChange,
 }: ITemperatureControlProps) {
   const handleChange = (
-    e: Event,
+    _e: Event,
     value: number | number[],
-    activeThumb: number
+    _activeThumb: number
   ) => {
     onChange(value as number);
   };
