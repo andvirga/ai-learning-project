@@ -1,7 +1,5 @@
 import OpenAI from "openai";
 import weatherService from "./weather";
-import { ChatCompletionMessage, ChatCompletionSystemMessageParam, ChatCompletionTool, ChatCompletionToolMessageParam, ChatCompletionUserMessageParam } from "openai/resources/index.mjs";
-import { CreateChatCompletionRequestMessage } from "openai/src/resources/index.js";
 
 type ChatCompletionArgs = {
     temperature: number;
@@ -72,7 +70,7 @@ class ChatService {
         systemPrompt: string,
         userPrompt: string
     }) {
-        const tools: ChatCompletionTool[] = [
+        const tools: OpenAI.Chat.ChatCompletionTool[] = [
             {
                 type: "function",
                 function: {
@@ -116,7 +114,7 @@ class ChatService {
                 const weather = await weatherService.getWeather(latitude, longitude);
 
                 //2. Create a message containing the result of the function call for the specific tool_call_id
-                const function_call_result_message: ChatCompletionToolMessageParam = {
+                const function_call_result_message: OpenAI.Chat.ChatCompletionToolMessageParam = {
                     role: "tool",
                     content: JSON.stringify(weather),
                     tool_call_id: toolCall.id
@@ -126,8 +124,8 @@ class ChatService {
                 const completion_payload = {
                     model: "gpt-4o",
                     messages: [
-                        { role: "system", content: systemPrompt } as ChatCompletionSystemMessageParam,
-                        { role: "user", content: userPrompt } as ChatCompletionUserMessageParam,
+                        { role: "system", content: systemPrompt } as OpenAI.Chat.ChatCompletionMessageParam,
+                        { role: "user", content: userPrompt } as OpenAI.Chat.ChatCompletionMessageParam,
                         completion.choices[0].message,
                         function_call_result_message
                     ]
