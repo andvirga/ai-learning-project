@@ -1,6 +1,7 @@
 enum PagesEnum {
     TextGeneration = 'text-generation',
-    ImageAnalysis = 'image-analysis'
+    ImageAnalysis = 'image-analysis',
+    FunctionCalling = 'function-calling'
 }
 
 export const PAGES = {
@@ -15,5 +16,11 @@ export const PAGES = {
         question: 'Do you believe God is playing with dices?',
         showImageControl: false,
         title: 'Chat Completions: Text Generation'
+    },
+    [PagesEnum.FunctionCalling]: {
+        name: 'The Weather Woman on TV',
+        question: 'What is the current weather in Ibiza, Spain',
+        showImageControl: false,
+        title: 'Chat Completions: Function Calling',
     }
 }

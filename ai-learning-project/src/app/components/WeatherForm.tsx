@@ -4,11 +4,6 @@ import { TextField, Box, Typography, Button } from "@mui/material";
 import chatService from "../apis/chatgpt";
 import { SystemPromptInput } from "./Inputs/SystemPromptInput";
 import { UserPromptInput } from "./Inputs/UserPromptInput";
-import { TemperatureControl } from "./Inputs/TemperatureControl";
-import ImageUploadInput from "./Inputs/ImageUploadInput";
-import Image from "next/image";
-import { TopPControl } from "./Inputs/TopPControl";
-import weatherService from "../apis/weather";
 
 type ChatResponse = {
   loading: boolean;
@@ -25,14 +20,11 @@ interface Props {
   };
 }
 
-export const ChatForm = ({ page }: Props): JSX.Element => {
+export const WeatherForm = ({ page }: Props): JSX.Element => {
   const [systemPrompt, setSystemPrompt] = useState<string>(
     `Act as if you were ${page.name}`
   );
   const [userPrompt, setUserPrompt] = useState<string>(page.question);
-  const [temperature, setTemperature] = useState<number>(1);
-  const [topP, setTopP] = useState<number>(1);
-  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [chatResponse, setChatResponse] = useState<ChatResponse>({
     loading: false,
     hasErrors: false,
@@ -45,23 +37,15 @@ export const ChatForm = ({ page }: Props): JSX.Element => {
       hasErrors: false,
       message: "ChatGPT is processing your answer...",
     });
-    const response = await chatService.getChatCompletion({
+    const response = await chatService.getChatCompletionWithTools({
       systemPrompt,
       userPrompt,
-      temperature,
-      topP,
-      base64Image: image,
     });
     setChatResponse({
       loading: false,
       hasErrors: response.hasErrors,
       message: response.message,
     });
-  };
-
-  const handleWeather = async () => {
-    const temp = await weatherService.getWeather(-32.95, -60.65);
-    console.log(">>> temp", temp);
   };
 
   return (
@@ -79,27 +63,6 @@ export const ChatForm = ({ page }: Props): JSX.Element => {
       >
         <SystemPromptInput value={systemPrompt} onChange={setSystemPrompt} />
         <UserPromptInput value={userPrompt} onChange={setUserPrompt} />
-        <Box display="flex" flexDirection="row" gap={1}>
-          <TemperatureControl value={temperature} onChange={setTemperature} />
-          <TopPControl value={topP} onChange={setTopP} />
-        </Box>
-        <Box display="flex" flexDirection="row" justifyContent="space-between">
-          {page.showImageControl && (
-            <ImageUploadInput
-              onImageUpload={(base64String) => {
-                setImage(base64String);
-              }}
-            />
-          )}
-          {image && (
-            <Image
-              src={image.toString()}
-              alt="Uploaded"
-              width={300}
-              height={300}
-            />
-          )}
-        </Box>
         <Button variant="contained" color="primary" onClick={handleChat}>
           Send
         </Button>
