@@ -8,7 +8,6 @@ import { TemperatureControl } from "./Inputs/TemperatureControl";
 import ImageUploadInput from "./Inputs/ImageUploadInput";
 import Image from "next/image";
 import { TopPControl } from "./Inputs/TopPControl";
-import weatherService from "../apis/weather";
 
 type ChatResponse = {
   loading: boolean;
