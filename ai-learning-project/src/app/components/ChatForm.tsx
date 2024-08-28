@@ -59,11 +59,6 @@ export const ChatForm = ({ page }: Props): JSX.Element => {
     });
   };
 
-  const handleWeather = async () => {
-    const temp = await weatherService.getWeather(-32.95, -60.65);
-    console.log(">>> temp", temp);
-  };
-
   return (
     <Box my={4}>
       <Typography variant="h4" component="h1" gutterBottom>
